@@ -1,8 +1,7 @@
-#!/usr/bin/env node
-
 const program = require('commander');
 const chalk = require('chalk');
 const clipboardy = require('clipboardy');
+const showBanner = require('node-banner');
 
 const createPassword = require('./utils/createPassword');
 const savePassword = require('./utils/savePassword');
@@ -19,20 +18,32 @@ program
 //getting the values from CLI object
 const { length, save, numbers, symbols } = program.opts();
 
-//generate password
-const generatedPassword = createPassword(length, numbers, symbols);
+//
+(async () => {
+  await showBanner(
+    'PASSGEN',
+    'Generates safe and secure password for you\n',
+    'green',
+    'green',
+  );
 
-//Save to file
-if (save) {
-  savePassword(generatedPassword);
-}
+  setTimeout(() => {
+    //generate password
+    const generatedPassword = createPassword(length, numbers, symbols);
 
-//copy to clipboard
-clipboardy.writeSync(generatedPassword);
+    //Save to file
+    if (save) {
+      savePassword(generatedPassword);
+    }
 
-//output generated password
-console.log(
-  chalk.blueBright('Generated Password: ') + chalk.bold(generatedPassword),
-);
+    //copy to clipboard
+    clipboardy.writeSync(generatedPassword);
 
-console.log(chalk.yellow('Password copied to clipboard'));
+    //output generated password
+    console.log(
+      chalk.blueBright('Generated Password: ') + chalk.bold(generatedPassword),
+    );
+
+    console.log(chalk.yellow('Password copied to clipboard 📋'));
+  }, 500);
+})();
