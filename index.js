@@ -23,7 +23,7 @@ const { length, save, numbers, symbols } = program.opts();
 //
 (async () => {
   await showBanner(
-    'PASSGEN',
+    'PASGEN',
     'Generates safe and secure password for you\n',
     'green',
     'green',
